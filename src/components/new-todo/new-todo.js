@@ -4,6 +4,8 @@ import { PropTypes } from 'prop-types';
 export default class NewTodo extends Component {
   state = {
     label: '',
+    min: '',
+    sec: '',
   };
 
   onLabelChange = (e) => {
@@ -12,30 +14,61 @@ export default class NewTodo extends Component {
     });
   };
 
+  onMinChange = (e) => {
+    this.setState({
+      min: e.target.value,
+    })
+  }
+
+  onSecChange = (e) => {
+    this.setState({
+      sec: e.target.value,
+    })
+  }
+
   onSubmit = (e) => {
-    const { addNewTodo } = this.props;
-    const { label } = this.state;
+    if (e.key === 'Enter') {
+    const { addNewTodo} = this.props;
+    const { label, min, sec } = this.state;
     e.preventDefault();
-    addNewTodo(label);
+    addNewTodo(label, min, sec);
     this.setState({
       label: '',
+      min: '',
+      sec: '',
     });
+  } 
   };
 
   render() {
-    const { label } = this.state;
+    const { label, min, sec } = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className="new-todo-form" onKeyUp={this.onSubmit}>
         <input
           type="text"
           className="new-todo"
           placeholder="What needs to be done?"
+          name='description'
           onChange={this.onLabelChange}
           value={label}
-          required
-          autoFocus
         />
-      </form>
+        <input
+          type="text"
+          className="new-todo-form__timer"
+          placeholder="Min"
+          name='minutes'
+          onChange={this.onMinChange}
+          value={min}
+        />
+        <input
+          type="text"
+          className="new-todo-form__timer"
+          placeholder="Sec"
+          name='seconds'
+          onChange={this.onSecChange}
+          value={sec}
+        /> 
+       </form>
     );
   }
 }

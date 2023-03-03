@@ -36,6 +36,8 @@
         "object-curly-newline": "off",
         "max-len": "off",
         "no-shadow": "off",
-        "no-param-reassign":"off"
+        "no-param-reassign":"off",
+        "no-trailing-spaces": "off",
+        "import/no-extraneous-dependencies": "off"
     }
 }

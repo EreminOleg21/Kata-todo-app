@@ -3,9 +3,12 @@ import React from 'react';
 
 import TodoListItem from '../todo-list-item';
 
-const TodoList = ({ todos, onDeleted, onToggleDone, onToggleEdit, onEditSubmit, editInputHandler }) => {
-  const elements = todos.map((item) => (
-    <TodoListItem
+const TodoList = ({ todos, onDeleted, 
+  onToggleDone, onToggleEdit, 
+  onEditSubmit, editInputHandler,
+  onTimerStart, onTimerStop}) => {
+    const elements = todos.map((item) => (
+      <TodoListItem
       {...item}
       key={item.id}
       onDeleted={() => onDeleted(item.id)}
@@ -13,8 +16,11 @@ const TodoList = ({ todos, onDeleted, onToggleDone, onToggleEdit, onEditSubmit, 
       onToggleEdit={() => onToggleEdit(item.id)}
       onEditSubmit={() => onEditSubmit(item.id)}
       editInputHandler={editInputHandler}
-    />
-  ));
+      onTimerStart={() => onTimerStart(item.id)}
+      onTimerStop={() => onTimerStop(item.id)}
+      
+      />
+      ));
   return <ul className="todo-list">{elements}</ul>;
 };
 

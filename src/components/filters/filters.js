@@ -19,7 +19,8 @@ export default class Filters extends Component {
       }
       return (
         <li key={name}>
-          <button key={name} type="button" onClick={() => onFilterChange(name)} className={classNames}>
+          <button key={name} type="button" onClick={() => onFilterChange(name)} 
+          className={classNames} >
             {label}
           </button>
         </li>

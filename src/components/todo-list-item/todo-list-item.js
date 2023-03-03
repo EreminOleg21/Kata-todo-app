@@ -1,12 +1,15 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import { React, Component } from 'react';
+import Timer from '../timer';
 
 export default class TodoListItem extends Component {
   render() {
-    const { label, id, done, onDeleted, onToggleDone, onToggleEdit, date, onEditSubmit, editInputHandler, status } = this.props;
+    const { label, id, done, 
+      onDeleted, onToggleDone, 
+      onToggleEdit, date, onEditSubmit, 
+      editInputHandler, status, time,
+      onTimerStop, onTimerStart} = this.props;
     let classNames;
-    const deleteBtnClass = 'icon icon-destroy';
-
     if (done) {
       classNames = 'completed';
     }
@@ -44,13 +47,17 @@ export default class TodoListItem extends Component {
             checked={classNames === 'completed'}
           ></input>
           <label>
-            <span className="description">{label}</span>
-            <span className="created">created {formatDistanceToNowStrict(date)} ago</span>
+            <span className="title">{label}</span>
+            <Timer 
+            time={time}
+            onTimerStart={onTimerStart}
+            onTimerStop={onTimerStop}/>
+            <span className="description">created {formatDistanceToNowStrict(date)} ago</span>
           </label>
 
           <button className="icon icon-edit" onClick={onToggleEdit}></button>
 
-          <button className={deleteBtnClass} onClick={onDeleted}></button>
+          <button className="icon icon-destroy" onClick={onDeleted}></button>
         </div>
         {editInput}
       </li>
