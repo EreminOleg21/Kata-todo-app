@@ -3,11 +3,20 @@ import React from 'react';
 
 import TodoListItem from '../todo-list-item';
 
-const TodoList = ({ todos, onDeleted, 
+export default function TodoList({ items, onDeleted, 
   onToggleDone, onToggleEdit, 
   onEditSubmit, editInputHandler,
-  onTimerStart, onTimerStop}) => {
-    const elements = todos.map((item) => (
+   filter, updateTime}) {
+    const filterItems = (items, filter) => {
+      if (filter === 'active') {
+        return items.filter((item) => !item.done)
+      }
+      if (filter === 'done') {
+        return items.filter((item) => item.done)
+      }
+      return items
+    }
+    const elements = filterItems(items, filter).map((item) => (
       <TodoListItem
       {...item}
       key={item.id}
@@ -16,15 +25,11 @@ const TodoList = ({ todos, onDeleted,
       onToggleEdit={() => onToggleEdit(item.id)}
       onEditSubmit={() => onEditSubmit(item.id)}
       editInputHandler={editInputHandler}
-      onTimerStart={() => onTimerStart(item.id)}
-      onTimerStop={() => onTimerStop(item.id)}
-      
+      updateTime={updateTime}      
       />
       ));
   return <ul className="todo-list">{elements}</ul>;
-};
-
-export default TodoList;
+}
 
 TodoList.defaultProps = {
   todos: [],

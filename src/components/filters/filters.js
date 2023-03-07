@@ -1,16 +1,14 @@
-import { React, Component } from 'react';
 import { PropTypes } from 'prop-types';
 
-export default class Filters extends Component {
-  filterButtons = [
+export default function Filters(props) {
+  const filterButtons = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
     { name: 'done', label: 'Done' },
   ];
 
-  render() {
-    const { filter, onFilterChange } = this.props;
-    const buttons = this.filterButtons.map(({ name, label }) => {
+    const { filter, onFilterChange } = props;
+    const buttons = filterButtons.map(({ name, label }) => {
       const isActive = filter === name;
       let classNames = '';
 
@@ -19,7 +17,10 @@ export default class Filters extends Component {
       }
       return (
         <li key={name}>
-          <button key={name} type="button" onClick={() => onFilterChange(name)} 
+          <button 
+          key={name} 
+          type="button" 
+          onClick={() => onFilterChange(name)} 
           className={classNames} >
             {label}
           </button>
@@ -29,14 +30,13 @@ export default class Filters extends Component {
 
     return <ul className="filters">{buttons}</ul>;
   }
-}
 
 Filters.defaultProps = {
-  filter: '',
+  filter: 'all',
   onFilterChange: () => {},
 };
 
 Filters.propTypes = {
-  filter: PropTypes.string.isRequired,
+  filter: PropTypes.string,
   onFilterChange: PropTypes.func,
 };

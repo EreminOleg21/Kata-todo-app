@@ -1,14 +1,14 @@
 import { formatDistanceToNowStrict } from 'date-fns';
-import { React, Component } from 'react';
+import { React } from 'react';
 import Timer from '../timer';
 
-export default class TodoListItem extends Component {
-  render() {
+export default function TodoListItem(props) {
     const { label, id, done, 
       onDeleted, onToggleDone, 
       onToggleEdit, date, onEditSubmit, 
       editInputHandler, status, time,
-      onTimerStop, onTimerStart} = this.props;
+      updateTime} = props;
+
     let classNames;
     if (done) {
       classNames = 'completed';
@@ -16,13 +16,13 @@ export default class TodoListItem extends Component {
 
     if (status === 'editing') {
       classNames = 'editing';
-    }
+    }    
 
     function onSubmitHandler(e) {
       e.preventDefault();
       onEditSubmit(id);
     }
-
+  
     const editInput = status === 'editing' ? (
         <form onSubmit={(e) => onSubmitHandler(e)}>
           <input
@@ -38,7 +38,7 @@ export default class TodoListItem extends Component {
       );
 
     return (
-      <li className={classNames} key={id}>
+      <li className={status} key={id}>
         <div className="view">
           <input
             className="toggle"
@@ -49,9 +49,9 @@ export default class TodoListItem extends Component {
           <label>
             <span className="title">{label}</span>
             <Timer 
-            time={time}
-            onTimerStart={onTimerStart}
-            onTimerStop={onTimerStop}/>
+            timer={time}
+            updateTime={updateTime}
+            status={status}/>
             <span className="description">created {formatDistanceToNowStrict(date)} ago</span>
           </label>
 
@@ -63,4 +63,3 @@ export default class TodoListItem extends Component {
       </li>
     );
   }
-}
